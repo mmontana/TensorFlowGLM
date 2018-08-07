@@ -45,7 +45,7 @@ plt.scatter(x_test ,predicted, s=10)
 plt.scatter(x,y, alpha=.7, c="red", s=10)
 ```
 
-![](https://github.com/mmontana/TensorFlowGLM/img/linear_regression.png)
+![](https://raw.githubusercontent.com/mmontana/TensorFlowGLM/master/img/linear_regression.png)
 
 ### Example: regularized softmax regression
 
