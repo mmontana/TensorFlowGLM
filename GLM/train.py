@@ -26,12 +26,13 @@ def minibatch(indices, size=.1, shuffle=True):
     if size >= n_samples:
         return indices, None
     
-    print(size)
-    
     if shuffle:
         random.shuffle(indices)
     
     return indices[:size], indices[size:]
+
+def epoch():
+    pass
 
 
 

@@ -23,9 +23,7 @@ class GLMBase(object):
         
         self._loss = loss
         self._optim = optim
-        
-        
-        
+              
         if self._x_train.ndim == 1:
             x_dim = 1
         else:
@@ -35,19 +33,15 @@ class GLMBase(object):
         else:
             y_dim = self._y_train.shape[1]
             
-        #TODO generalize dimensionality
         self._W_init = tf.truncated_normal(shape=(x_dim,y_dim))
         self._b_init = tf.truncated_normal(shape=(y_dim,))
         
         self._W = tf.Variable(self._W_init)
         self._b = tf.Variable(self._b_init)
         
-        #self._x = tf.placeholder(tf.float32, (self._n_samples,x_dim))
-        #self._y = tf.placeholder(tf.float32, (self._n_samples,y_dim))
         self._x = tf.placeholder(tf.float32)
         self._y = tf.placeholder(tf.float32)
 
-        #self._y_lin = (self._x * self._W) + self._b
         self._y_lin = (tf.matmul(self._x, self._W)) + self._b
         
         if self._activation is not None:
@@ -58,23 +52,29 @@ class GLMBase(object):
         self._l = self._loss(self._y, self._y_pred)
         self._train = self._optim.minimize(self._l)
     
-    def fit(self, n_steps, batch=False):
+    def fit(self, iteration="epoch",
+            n_steps=100, 
+            minibatches=False, 
+            batch_size=.1):
+        
         #create session
         if not self._fit:
             self._session = tf.Session()
             self._session.run(tf.global_variables_initializer())
         
+       
+        #TODO batch training
         #batch training goes here
         
-        feed = {self._x: self._x_train, self._y: self._y_train}
-        
         #gradient descent
+        #TODO early stopping
+        feed = {self._x: self._x_train, self._y: self._y_train}
         for i in range(n_steps):
             _,loss = self._session.run([self._train,self._l],feed_dict=feed)
         
-        #store weights?           
-        pass
-    
+        self._fit = True
+        #TODO print training report
+
     def predict(self, x_test, 
                 predict_classes=False,
                 batches=False,
@@ -89,10 +89,6 @@ class GLMBase(object):
         if predict_classes:
             y_out = np.round(y_out, decimals=decimals)
         return y_out
-    
-    def fit_predict(self):
-        pass
-        #wrapper for self.fit() self.predict()
             
     def report(self):
         #get tensorboard information etc
@@ -101,3 +97,9 @@ class GLMBase(object):
     def save(self):
         #save model
         pass
+    
+    def start_session(self,**args):
+        self._session = tf.Session(**args)
+        
+    def close_session(self, **args):
+        self._session.close(**args)
