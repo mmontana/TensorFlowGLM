@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import random
 
-def minibatch(indices, size=.1, shuffle=True):
+def minibatch(indices, size=100, shuffle=True):
     """
     returns a minibatch from indices
     
