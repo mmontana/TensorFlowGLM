@@ -25,13 +25,13 @@ x = np.random.uniform(0,10,100)
 w = 10
 b = -5
 noise = np.random.normal(scale=15,size=100)
-y = w * x +b + noise
+y = w * x + b + noise
 ```
 
 ```python
 from GLM import model 
 
-inreg = model.GLMBase(x[:,np.newaxis],y[:,np.newaxis],
+inreg = model.GLMBase(x[:,np.newaxis], y[:,np.newaxis],
                 activation=None,
                 loss=tf.losses.mean_squared_error,
                 optim= tf.train.AdamOptimizer(learning_rate=.1))
@@ -45,7 +45,7 @@ plt.scatter(x_test ,predicted, s=10)
 plt.scatter(x,y, alpha=.7, c="red", s=10)
 ```
 
-![](https://raw.githubusercontent.com/mmontana/TensorFlowGLM/master/img/linear_regression.png)
+![](https://raw.githubusercontent.com/mmontana/TensorFlowGLM/master/img/linear_regression.jpg)
 
 ### Example: regularized softmax regression
 
